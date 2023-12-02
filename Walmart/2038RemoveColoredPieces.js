@@ -13,34 +13,20 @@
  * @return {boolean}
  */
  var winnerOfGame = function(colors) {
-    const n = colors.length;
-
-    // Helper function to count consecutive characters in the string
-    const countConsecutive = (str, char) => {
-        let count = 0;
-        let maxCount = 0;
-
-        for (let i = 0; i < str.length; i++) {
-            if (str[i] === char) {
-                count++;
-                maxCount = Math.max(maxCount, count);
-            } else {
-                count = 0;
-            }
+    let n = colors.length;
+    let aliceWins = 0, bobWins = 0;
+    for (let i = 1; i < n - 1; i++) {
+        if (colors[i - 1] == 'A' && colors[i] == 'A' && colors[i + 1] == 'A') {
+            aliceWins++;
+        } else if (colors[i - 1] == 'B' && colors[i] == 'B' && colors[i + 1] == 'B') {
+            bobWins++;
         }
-
-        return maxCount;
-    };
-
-    // Count consecutive 'A's and 'B's
-    const countA = countConsecutive(colors, 'A');
-    const countB = countConsecutive(colors, 'B');
-
-    // Alice and Bob make optimal moves based on the counts
-    const aliceWins = countA > countB && countB > 0;
-
-    return aliceWins;
-};
+        }
+        if (aliceWins > bobWins) {
+            return true;
+        }
+        return false;
+}
 
 const colors = "AAABBBBBBAAAAAAAA";
 console.log(winnerOfGame(colors)); // Output: true
